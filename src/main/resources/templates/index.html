@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>insDAgram</title>
+</head>
+<body>
+<h1>insDAgram</h1>
+<hr>
+
+<form action="/" method="post">
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+
+    <input type="text" name="username" placeholder="What's your name?">
+    <input type="password" name="password" placeholder="PASSWORD">
+    <button type="submit">Sign In</button>
+</form>
+<a href="/accounts/password/reset">Forgot password?</a>
+<a>Don't have an account? </a><a href="/accounts/emailsignup">Sign Up</a>
+</body>
+</html>
