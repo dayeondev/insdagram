@@ -31,6 +31,7 @@ public class AccountService implements UserDetailsService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         accountDto.setPassword(passwordEncoder.encode(accountDto.getPassword()));
 
+
         return accountRepository.save(accountDto.toEntity()).getId();
     }
 

@@ -10,12 +10,11 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class AccountDto {
-    Long id;
-
-    String username;
-    String password;
-    LocalDateTime createDate;
-    LocalDateTime modifiedDate;
+    private Long id;
+    private String username;
+    private String password;
+    private LocalDateTime createDate;
+    private LocalDateTime modifiedDate;
 
     public Account toEntity(){
         return Account.builder()

@@ -4,12 +4,14 @@
     <title>SignUp</title>
 </head>
 <body>
-<h1>회원가입</h1>
+<h1>signUp</h1>
 <hr>
-<form action="/accounts/emailsignup/" method="post">
-    <input type="text" id="username" name="username" placeholder="아이디입력">
-    <input type="password" id="password" name="password" placeholder="비밀번호">
-    <button type="submit">로그인</button>
+<form th:action="@{/accounts/emailsignup/}" method="post">
+    <label for="username">username</label>
+    <input type="text" id="username" name="username" placeholder="input username"><br/>
+    <label for="password">password</label>
+    <input type="password" id="password" name="password" placeholder="input password">
+    <button type="submit">signUp</button>
 </form>
 </body>
 </html>
