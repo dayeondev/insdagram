@@ -58,9 +58,9 @@ public class AccountController {
         return "/accounts/logout";
     }
 
-    @GetMapping("/accounts/edit/")
+    @GetMapping("/accounts/edit")
     public String profileEdit(){
         // 프로필 페이지 수정하는 곳.
-        return "/accounts/edit";
+        return "/accounts/profile_edit";
     }
 }
