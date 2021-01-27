@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-package com.dayeon.insdagram.repository;public interface SpringDataJpaAccountRepository {
-=======
 package com.dayeon.insdagram.repository;
 
 import com.dayeon.insdagram.domain.Account;
@@ -12,5 +9,4 @@ public interface SpringDataJpaAccountRepository extends JpaRepository<Account, L
 
     @Override
     public Optional<Account> findByUsername(String username);
->>>>>>> Stashed changes
 }

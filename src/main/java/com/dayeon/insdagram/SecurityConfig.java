@@ -21,8 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AccountService accountService;
 
-    private final AuthenticationFailureHandler failureHandler;
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

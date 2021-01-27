@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-package com.dayeon.insdagram.repository;public class JpaAccountRepository {
-=======
 package com.dayeon.insdagram.repository;
 
 import com.dayeon.insdagram.domain.Account;
@@ -41,5 +38,4 @@ public class JpaAccountRepository implements AccountRepository {
                 .getResultList();
         return result.stream().findAny();
     }
->>>>>>> Stashed changes
 }
