@@ -1,11 +1,8 @@
-<<<<<<< Updated upstream
-package com.dayeon.insdagram.repository;public class JpaAccountRepository {
-=======
 package com.dayeon.insdagram.repository;
 
+import javax.persistence.EntityManager;
 import com.dayeon.insdagram.domain.Account;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +38,4 @@ public class JpaAccountRepository implements AccountRepository {
                 .getResultList();
         return result.stream().findAny();
     }
->>>>>>> Stashed changes
 }
