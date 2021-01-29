@@ -1,8 +1,8 @@
 package com.dayeon.insdagram.repository;
 
+import javax.persistence.EntityManager;
 import com.dayeon.insdagram.domain.Account;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
