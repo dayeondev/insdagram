@@ -24,35 +24,19 @@ import java.util.Optional;
 public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
 
-//    joinUser()
-
-    public Long signUp(AccountDto accountDto) {
-        validateDuplicateMember(accountDto);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        accountDto.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-
-
-        return accountRepository.save(accountDto.toEntity()).getId();
-    }
-
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Account> accountWrapper = accountRepository.findByUsername(username);
         Account account = accountWrapper.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
+
         if (("admin").equals(username)) {
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
         }
         return new User(account.getUsername(), account.getPassword(), authorities);
-    }
 
-    private void validateDuplicateMember(AccountDto accountDto){
-        accountRepository.findByUsername(accountDto.getUsername()).ifPresent(m -> {
-            throw new IllegalStateException("Username already exists.");
-        });
     }
 }

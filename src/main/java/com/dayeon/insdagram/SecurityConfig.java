@@ -20,10 +20,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private AccountService accountService;
+    private final AccountService accountService;
+    private final AuthenticationFailureHandler customFailureHandler;
+    private final AuthenticationSuccessHandler customSuccessHandler;
 
-//    private final AuthenticationFailureHandler customFailureHandler;
-//    private final AuthenticationSuccessHandler customSuccessHandler;
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -44,7 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and() // 로그인 설정
                 .formLogin()
                 .loginPage("/")
-                .defaultSuccessUrl("/newposts")
+//                .defaultSuccessUrl("/newposts")
+                .successHandler(customSuccessHandler)
+                .failureHandler(customFailureHandler)
                 .permitAll()
                 .and() // 로그아웃 설정
                 .logout()
