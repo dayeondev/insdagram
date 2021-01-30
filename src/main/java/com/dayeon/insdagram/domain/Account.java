@@ -19,6 +19,14 @@ public class Account  {
     private String password;
 
 
+//    private String name;
+//    private String bio;
+//    private String email;
+//    private String phone;
+//    private String profileImage;
+
+
+
 
     @Builder
     public Account(Long id, String username, String password) {

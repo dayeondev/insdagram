@@ -57,4 +57,9 @@ public class AccountController {
     public String logOut(){
         return "/accounts/logout";
     }
+
+    @GetMapping("/accounts/edit/")
+    public String profileEdit(){
+        return "/accounts/edit";
+    }
 }
