@@ -60,6 +60,7 @@ public class AccountController {
 
     @GetMapping("/accounts/edit/")
     public String profileEdit(){
+        // 프로필 페이지 수정하는 곳.
         return "/accounts/edit";
     }
 }
