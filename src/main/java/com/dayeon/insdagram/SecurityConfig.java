@@ -1,5 +1,6 @@
 package com.dayeon.insdagram;
 
+import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AccountService accountService;
     private final AuthenticationFailureHandler customFailureHandler;
     private final AuthenticationSuccessHandler customSuccessHandler;
+    private final AccountRepository accountRepository;
+
 
 
 

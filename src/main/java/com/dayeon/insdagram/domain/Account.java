@@ -6,9 +6,9 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name="account")
 @Entity
+@NoArgsConstructor
 public class Account  {
 
     @Id
