@@ -26,8 +26,7 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Account> accountWrapper = accountRepository.findByUsername(username);
-        Account account = accountWrapper.get();
+        Account account = accountRepository.findByUsername(username);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 

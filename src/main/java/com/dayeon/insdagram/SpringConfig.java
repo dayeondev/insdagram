@@ -1,7 +1,6 @@
 package com.dayeon.insdagram;
 
 import com.dayeon.insdagram.repository.AccountRepository;
-import com.dayeon.insdagram.repository.MemoryAccountRepository;
 import com.dayeon.insdagram.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

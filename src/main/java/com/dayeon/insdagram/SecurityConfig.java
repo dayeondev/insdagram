@@ -3,6 +3,7 @@ package com.dayeon.insdagram;
 import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.service.AccountService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,19 +19,23 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+//@AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AccountService accountService;
-    private final AuthenticationFailureHandler customFailureHandler;
-    private final AuthenticationSuccessHandler customSuccessHandler;
-    private final AccountRepository accountRepository;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private AuthenticationFailureHandler customFailureHandler;
+    @Autowired
+    private AuthenticationSuccessHandler customSuccessHandler;
+    @Autowired
+    private AccountRepository accountRepository;
 
 
 
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 

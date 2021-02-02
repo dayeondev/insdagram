@@ -5,23 +5,20 @@ import com.dayeon.insdagram.dto.AccountDto;
 import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.service.AccountService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 @Controller
-@AllArgsConstructor
 public class AccountController {
-    //    @GetMapping("/")
-//    public String signIn(@RequestParam("name") String name, Model model){
-//        model.addAttribute("name", name);
-//        return "/index";
-//    }
-    private AccountService accountService;
-    private final AccountRepository accountRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String signIn(@RequestParam(value = "error", required = false) String error,
@@ -43,16 +40,18 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/emailsignup")
-    public String signUp(AccountDto accountDto) {
-        validateDuplicateMember(accountDto);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        accountDto.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+    public String signUp(Account account) {
+        validateDuplicateMember(account.getUsername());
+//        passwordEncoder = new BCryptPasswordEncoder();
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        accountRepository.save(account);
         return "redirect:/";
     }
-    private void validateDuplicateMember(AccountDto accountDto){
-        accountRepository.findByUsername(accountDto.getUsername()).ifPresent(m -> {
-            throw new IllegalStateException("Username already exists.");
-        });
+    @ExceptionHandler
+    private void validateDuplicateMember(String username){
+
+        accountRepository.findByUsername(username);
+
     }
 
     @GetMapping("/newposts")
@@ -74,7 +73,7 @@ public class AccountController {
     @GetMapping("/{username}")
     public String profile(@PathVariable String username,
                           Model model) {
-        Account account = accountRepository.findByUsername(username).get();
+        Account account = accountRepository.findByUsername(username);
         if(account.getUsername() == null){
             return "/error";
         }

@@ -4,26 +4,25 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @Table(name="account")
 @Entity
+@Data
 @NoArgsConstructor
 public class Account  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue
     private Long id;
     private String username;
     private String password;
 
 
-//    private String name;
-//    private String bio;
-//    private String email;
-//    private String phone;
-//    private String profileImage;
+    private String name;
+    private String bio;
+    private String email;
+    private String phone;
+    private String profileImage;
 
 
 
