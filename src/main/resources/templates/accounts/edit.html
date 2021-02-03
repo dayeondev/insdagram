@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>profile_edit</title>
 </head>
 <body>
 
+<form th:action="@{/accounts/${username}/}" method="post">
+    <input type="text" name="username" placeholder="What's your name?">
+    <input type="password" name="password" placeholder="PASSWORD">
+    <button type="submit">Sign In</button>
+</form>
 </body>
 </html>

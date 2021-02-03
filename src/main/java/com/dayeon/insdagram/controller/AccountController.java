@@ -6,6 +6,8 @@ import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,7 @@ public class AccountController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
 
     @GetMapping("/")
     public String signIn(@RequestParam(value = "error", required = false) String error,
@@ -65,9 +68,16 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/edit")
-    public String profileEdit(){
+    public String profileEditForm(@AuthenticationPrincipal Account account){
         // 프로필 페이지 수정하는 곳.
+        System.out.println(account.getUsername());
         return "/accounts/edit";
+    }
+
+    @PostMapping("/accounts/edit")
+    public String profileEdit(){
+//        return "redirect:/" +
+        return null;
     }
 
     @GetMapping("/{username}")
@@ -79,6 +89,7 @@ public class AccountController {
         }
         else{
             model.addAttribute("username", account.getUsername());
+            model.addAttribute("bio", account.getBio());
         }
 
         return "/accounts/profile";
