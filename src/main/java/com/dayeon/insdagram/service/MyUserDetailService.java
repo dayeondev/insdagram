@@ -21,7 +21,7 @@ import java.util.Optional;
 
 
 @AllArgsConstructor
-public class AccountService implements UserDetailsService {
+public class MyUserDetailService implements UserDetailsService {
     private final AccountRepository accountRepository;
 
     @Override

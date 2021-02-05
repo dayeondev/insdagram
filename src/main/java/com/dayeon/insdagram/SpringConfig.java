@@ -1,9 +1,8 @@
 package com.dayeon.insdagram;
 
 import com.dayeon.insdagram.repository.AccountRepository;
-import com.dayeon.insdagram.service.AccountService;
+import com.dayeon.insdagram.service.MyUserDetailService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,8 +22,8 @@ public class SpringConfig {
 //    }
 
     @Bean
-    public AccountService accountService(){
-        return new AccountService(accountRepository);
+    public MyUserDetailService accountService(){
+        return new MyUserDetailService(accountRepository);
     }
 
 
