@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.NonUniqueResultException;
+import java.util.Optional;
 
 @Controller
 public class AccountController {
@@ -67,7 +68,7 @@ public class AccountController {
         return "redirect:/";
     }
     @GetMapping("/newposts")
-    public String newPosts() {
+    public String newPosts(Account account) {
 
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        System.out.println("!!");
@@ -75,6 +76,9 @@ public class AccountController {
 //        if(userDetails.getUsername() != null){
 //            System.out.println(userDetails.getUsername());
 //        }
+//        Optional<Account> optionalAccount = accountRepository.findById(account.getId());
+//        Account a = optionalAccount.get();
+//        System.out.println(account.getUsername());
 
         return "/newposts";
     }
