@@ -6,10 +6,10 @@
 </head>
 <body>
 
-<form th:action="@{/accounts/${username}/}" method="post">
+<form th:action="@{/accounts/edit}" method="post">
     <input type="text" name="username" placeholder="What's your name?">
-    <input type="password" name="password" placeholder="PASSWORD">
-    <button type="submit">Sign In</button>
+    <input type="text" name="bio" placeholder="bio">
+    <button type="submit">submit</button>
 </form>
 </body>
 </html>

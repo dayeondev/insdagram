@@ -5,12 +5,14 @@ import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.service.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.NonUniqueResultException;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -53,33 +55,22 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/emailsignup")
-    public String signUp(Account account) {
+    public String signUp(Account requestAccount) {
 
         try{
-            accountRepository.findByUsername(account.getUsername());
+            accountRepository.findByUsername(requestAccount.getUsername());
             System.out.println("중복 계정임을 알려주는 기능을 넣어야 합니다.");
         }
         catch (IllegalStateException e){
-            account.setPassword(passwordEncoder.encode(account.getPassword()));
+            requestAccount.setPassword(passwordEncoder.encode(requestAccount.getPassword()));
             System.out.println("here");
-            accountRepository.save(account);
+            accountRepository.save(requestAccount);
         }
 
         return "redirect:/";
     }
     @GetMapping("/newposts")
-    public String newPosts(Account account) {
-
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        System.out.println("!!");
-//        UserDetails userDetails = (UserDetails) principal;
-//        if(userDetails.getUsername() != null){
-//            System.out.println(userDetails.getUsername());
-//        }
-//        Optional<Account> optionalAccount = accountRepository.findById(account.getId());
-//        Account a = optionalAccount.get();
-//        System.out.println(account.getUsername());
-
+    public String newPosts() {
         return "/newposts";
     }
 
@@ -89,16 +80,29 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/edit")
-    public String profileEditForm(@AuthenticationPrincipal Account account){
+    public String profileEditForm(@AuthenticationPrincipal User user,
+                                  Model model){
         // 프로필 페이지 수정하는 곳.
-        System.out.println(account.getUsername());
+//        Account account = accountRepository.findByUsername(user.getUsername());
+
+//        System.out.println(account.getUsername());
+
+//        model.addAttribute("my_home", "@{/user/" + account.getUsername() + "}");
+
         return "/accounts/edit";
     }
 
     @PostMapping("/accounts/edit")
-    public String profileEdit(){
-//        return "redirect:/" +
-        return null;
+    public String profileEdit(@AuthenticationPrincipal User user,
+                              Account requestAccount){
+        Account account = accountRepository.findByUsername(user.getUsername());
+        System.out.println(user.getUsername());
+        account.setUsername(requestAccount.getUsername());
+        account.setBio(requestAccount.getBio());
+
+        accountRepository.save(account);
+
+        return logOut();
     }
 
     @GetMapping("/user/{username}")
