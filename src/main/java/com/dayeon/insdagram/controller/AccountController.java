@@ -89,6 +89,11 @@ public class AccountController {
 
 //        model.addAttribute("my_home", "@{/user/" + account.getUsername() + "}");
 
+
+        Account account = accountRepository.findByUsername(user.getUsername());
+        model.addAttribute("username", account.getUsername());
+        model.addAttribute("bio", account.getBio());
+
         return "/accounts/edit";
     }
 
