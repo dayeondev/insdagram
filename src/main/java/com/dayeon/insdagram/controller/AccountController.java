@@ -2,6 +2,7 @@ package com.dayeon.insdagram.controller;
 
 import com.dayeon.insdagram.domain.Account;
 import com.dayeon.insdagram.repository.AccountRepository;
+import com.dayeon.insdagram.service.MyUserDetail;
 import com.dayeon.insdagram.service.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,13 +32,7 @@ public class AccountController {
     @GetMapping("/")
     public String signIn(@RequestParam(value = "error", required = false) String error,
                          @RequestParam(value = "exception", required = false) String exception,
-//                            Principal principal,
-//                         Authentication authentication,
                          Model model) {
-//        System.out.println("here" + principal.getName());
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//        System.out.println(userDetails.getUsername());
-
 
         if(true){ //세션이 없을 때 동작
             model.addAttribute("error", error);
@@ -82,18 +77,15 @@ public class AccountController {
     @GetMapping("/accounts/edit")
     public String profileEditForm(@AuthenticationPrincipal User user,
                                   Model model){
-        // 프로필 페이지 수정하는 곳.
-//        Account account = accountRepository.findByUsername(user.getUsername());
-
-//        System.out.println(account.getUsername());
-
-//        model.addAttribute("my_home", "@{/user/" + account.getUsername() + "}");
-
 
         Account account = accountRepository.findByUsername(user.getUsername());
-        model.addAttribute("username", account.getUsername());
-        model.addAttribute("bio", account.getBio());
 
+        model.addAttribute("username", account.getUsername());
+        model.addAttribute("name", account.getName());
+        model.addAttribute("bio", account.getBio());
+        model.addAttribute("website", account.getWebsite());
+        model.addAttribute("email", account.getEmail());
+        model.addAttribute("phoneNumber", account.getPhoneNumber());
         return "/accounts/edit";
     }
 
@@ -103,7 +95,12 @@ public class AccountController {
         Account account = accountRepository.findByUsername(user.getUsername());
         System.out.println(user.getUsername());
         account.setUsername(requestAccount.getUsername());
+//        account.setProfileImage(requestAccount.getProfileImage());
+        account.setName(requestAccount.getName());
+        account.setWebsite(requestAccount.getWebsite());
         account.setBio(requestAccount.getBio());
+        account.setEmail(requestAccount.getEmail());
+        account.setPhoneNumber(requestAccount.getPhoneNumber());
 
         accountRepository.save(account);
 
@@ -119,7 +116,11 @@ public class AccountController {
         }
         else{
             model.addAttribute("username", account.getUsername());
+            model.addAttribute("name", account.getName());
             model.addAttribute("bio", account.getBio());
+            model.addAttribute("website", account.getWebsite());
+            model.addAttribute("email", account.getEmail());
+            model.addAttribute("phoneNumber", account.getPhoneNumber());
         }
 
         return "/accounts/profile";

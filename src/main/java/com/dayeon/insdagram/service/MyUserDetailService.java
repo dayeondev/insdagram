@@ -2,7 +2,6 @@ package com.dayeon.insdagram.service;
 
 import com.dayeon.insdagram.domain.Account;
 import com.dayeon.insdagram.domain.Role;
-import com.dayeon.insdagram.dto.AccountDto;
 import com.dayeon.insdagram.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

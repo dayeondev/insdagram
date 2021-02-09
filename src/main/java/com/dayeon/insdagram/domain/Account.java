@@ -18,11 +18,13 @@ public class Account  {
     private String password;
 
 
+    private String profileImage;
+
     private String name;
+    private String website;
     private String bio;
     private String email;
-    private String phone;
-    private String profileImage;
+    private String phoneNumber;
 
 
 
