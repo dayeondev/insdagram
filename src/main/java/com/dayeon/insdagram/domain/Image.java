@@ -8,7 +8,7 @@ import java.security.Timestamp;
 @Table(name="image")
 @Entity
 @Data
-public class Images {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
