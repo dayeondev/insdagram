@@ -1,7 +1,7 @@
 package com.dayeon.insdagram;
 
 import com.dayeon.insdagram.repository.AccountRepository;
-import com.dayeon.insdagram.service.MyUserDetailService;
+import com.dayeon.insdagram.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private MyUserDetailService accountService;
+    private CustomUserDetailService accountService;
     @Autowired
     private AuthenticationFailureHandler customFailureHandler;
     @Autowired
@@ -46,8 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 // 페이지 권한 설정
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/newposts", "/user/edit").hasRole("MEMBER")
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/newposts", "/user/edit").hasRole("MEMBER")
 //                .antMatchers("/", "user/**", "/accounts/emailsignup").permitAll()
 //                .anyRequest().authenticated()
                 .anyRequest().permitAll()

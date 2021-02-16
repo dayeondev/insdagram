@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/image/uploadProc}" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td><input id="input_img" type="file" name="file" placeholder="input photo"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Upload">
+</form>
+
+</body>
+</html>

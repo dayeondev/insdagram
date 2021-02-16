@@ -2,8 +2,8 @@ package com.dayeon.insdagram.controller;
 
 import com.dayeon.insdagram.domain.Account;
 import com.dayeon.insdagram.repository.AccountRepository;
-import com.dayeon.insdagram.service.MyUserDetail;
-import com.dayeon.insdagram.service.MyUserDetailService;
+import com.dayeon.insdagram.service.CustomUserDetail;
+import com.dayeon.insdagram.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -12,15 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.NonUniqueResultException;
-import java.security.Principal;
-import java.util.Optional;
-
 @Controller
 public class AccountController {
 
     @Autowired
-    private MyUserDetailService myUserDetailService;
+    private CustomUserDetailService myUserDetailService;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -75,7 +71,7 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/edit")
-    public String profileEditForm(@AuthenticationPrincipal User user,
+    public String profileEditForm(@AuthenticationPrincipal CustomUserDetail user,
                                   Model model){
 
         Account account = accountRepository.findByUsername(user.getUsername());
@@ -90,7 +86,7 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/edit")
-    public String profileEdit(@AuthenticationPrincipal User user,
+    public String profileEdit(@AuthenticationPrincipal CustomUserDetail user,
                               Account requestAccount){
         Account account = accountRepository.findByUsername(user.getUsername());
         System.out.println(user.getUsername());
