@@ -2,7 +2,6 @@ package com.dayeon.insdagram.service;
 
 import com.dayeon.insdagram.domain.Account;
 import com.dayeon.insdagram.domain.Role;
-import com.dayeon.insdagram.dto.AccountDto;
 import com.dayeon.insdagram.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +19,24 @@ import java.util.List;
 import java.util.Optional;
 
 
-@AllArgsConstructor
-public class AccountService implements UserDetailsService {
-    private final AccountRepository accountRepository;
+@Service
+public class CustomUserDetailService implements UserDetailsService {
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Account> accountWrapper = accountRepository.findByUsername(username);
-        Account account = accountWrapper.get();
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-
-        if (("admin").equals(username)) {
-            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
-        } else {
-            authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+        Account account = accountRepository.findByUsername(username);
+        CustomUserDetail userDetail = null;
+        if(account != null){
+            userDetail = new CustomUserDetail();
+            userDetail.setAccount(account);
         }
-        return new User(account.getUsername(), account.getPassword(), authorities);
-
+        else{
+            throw new UsernameNotFoundException("Not Found 'username'");
+        }
+        return userDetail;
     }
 }

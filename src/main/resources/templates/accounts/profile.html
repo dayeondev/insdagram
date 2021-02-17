@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>profile</title>
+</head>
+<body>
+
+<h1>profile</h1>
+<hr/>
+<h2>
+<a th:text="${username}"></a><br/>
+</h2>
+
+<h3>
+    <a th:text="${name}"></a><br/>
+
+
+</h3>
+<h4>
+    <a th:text="${bio}"></a><br/>
+    <a th:href="${website}" th:text="${website}"></a><br/>
+</h4>
+<h5>
+    <a th:text="${email}"></a><br/>
+    <a th:text="${phoneNumber}"></a><br/>
+</h5>
+</body>
+</html>

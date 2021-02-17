@@ -1,10 +1,8 @@
 package com.dayeon.insdagram;
 
 import com.dayeon.insdagram.repository.AccountRepository;
-import com.dayeon.insdagram.repository.MemoryAccountRepository;
-import com.dayeon.insdagram.service.AccountService;
+import com.dayeon.insdagram.service.CustomUserDetailService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class SpringConfig {
 
-    private final AccountRepository accountRepository;
+//    private final AccountRepository accountRepository;
 
 ////    JpaAccountRepository 사용 시
 //    private final DataSource dataSource;
@@ -22,11 +20,11 @@ public class SpringConfig {
 //        this.dataSource = dataSource;
 //        this.em = em;
 //    }
-
-    @Bean
-    public AccountService accountService(){
-        return new AccountService(accountRepository);
-    }
+//
+//    @Bean
+//    public CustomUserDetailService accountService(){
+//        return new CustomUserDetailService(accountRepository);
+//    }
 
 
 //    @Bean
