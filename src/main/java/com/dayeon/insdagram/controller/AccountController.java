@@ -97,6 +97,7 @@ public class AccountController {
         account.setBio(requestAccount.getBio());
         account.setEmail(requestAccount.getEmail());
         account.setPhoneNumber(requestAccount.getPhoneNumber());
+        account.setProfileImage(requestAccount.getProfileImage());
 
         accountRepository.save(account);
 
@@ -106,11 +107,14 @@ public class AccountController {
     @GetMapping("/user/{username}")
     public String profile(@PathVariable String username,
                           Model model) {
-        Account account = accountRepository.findByUsername(username);
-        if(account.getUsername() == null){
+
+        if(username == null){
             return "/error";
         }
         else{
+
+            Account account = accountRepository.findByUsername(username);
+
             model.addAttribute("username", account.getUsername());
             model.addAttribute("name", account.getName());
             model.addAttribute("bio", account.getBio());

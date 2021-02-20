@@ -3,6 +3,7 @@ package com.dayeon.insdagram.controller;
 
 import com.dayeon.insdagram.domain.Account;
 import com.dayeon.insdagram.domain.Image;
+import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.repository.ImageRepository;
 import com.dayeon.insdagram.service.CustomUserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -35,12 +37,15 @@ public class ImageController {
     @Autowired
     ImageRepository imageRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
 
 
     @GetMapping("/image/upload")
     public String imageUpload() {
         return "image/imageUpload";
     }
+
 
     @PostMapping("/image/uploadProc")
     public String imageUploadProc(
@@ -72,5 +77,42 @@ public class ImageController {
 //                .body(new ByteArrayResource(file.getBytes()));
 
         return "redirect:/";
+    }
+
+    @PostMapping("/image/profileUpload")
+    public String userProfileUpload(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+            @RequestParam("profileImage") MultipartFile file
+
+    ) throws IOException {
+
+
+        // 파일 처리
+        UUID uuid = UUID.randomUUID();
+        String uuidFilename = uuid + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get(fileRealPath + uuidFilename);
+        Files.write(filePath, file.getBytes());
+
+        Account principal = userDetail.getAccount();
+
+//        // 영속화
+//        Optional<Account> optionalAccount = accountRepository.findById(principal.getId());
+//        Account account = optionalAccount.get();
+
+        Image image = new Image();
+
+        image.setFile(file.getBytes());
+        image.setAccount(principal);
+
+        imageRepository.save(image);
+
+
+        // 값 변경
+        principal.setProfileImage(uuidFilename);
+
+        // 다시 영속화 및 저장
+        accountRepository.save(principal);
+        System.out.println("redirect:/user/" + principal.getUsername());
+        return "redirect:/user/" + principal.getUsername();
     }
 }
