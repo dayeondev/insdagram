@@ -12,17 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 public class AccountController {
 
     @Autowired
-    private CustomUserDetailService myUserDetailService;
+    private CustomUserDetailService customUserDetailService;
 
-    @Autowired
-    private AccountRepository accountRepository;
+//    @Autowired
+//    private AccountRepository accountRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
 
 
     @GetMapping("/")
@@ -48,16 +48,7 @@ public class AccountController {
     @PostMapping("/accounts/emailsignup")
     public String signUp(Account requestAccount) {
 
-        try{
-            accountRepository.findByUsername(requestAccount.getUsername());
-            System.out.println("중복 계정임을 알려주는 기능을 넣어야 합니다.");
-        }
-        catch (IllegalStateException e){
-            requestAccount.setPassword(passwordEncoder.encode(requestAccount.getPassword()));
-            System.out.println("here");
-            accountRepository.save(requestAccount);
-        }
-
+        customUserDetailService.signUpAccount(requestAccount);
         return "redirect:/";
     }
     @GetMapping("/newposts")
@@ -73,34 +64,22 @@ public class AccountController {
     @GetMapping("/accounts/edit")
     public String profileEditForm(@AuthenticationPrincipal CustomUserDetail user,
                                   Model model){
+        Optional<Account> optionalAccount = customUserDetailService.findByUsername(user.getUsername());
 
-        Account account = accountRepository.findByUsername(user.getUsername());
-
-        model.addAttribute("username", account.getUsername());
-        model.addAttribute("name", account.getName());
-        model.addAttribute("bio", account.getBio());
-        model.addAttribute("website", account.getWebsite());
-        model.addAttribute("email", account.getEmail());
-        model.addAttribute("phoneNumber", account.getPhoneNumber());
+        model.addAttribute("username", optionalAccount.get().getUsername());
+        model.addAttribute("name", optionalAccount.get().getName());
+        model.addAttribute("bio", optionalAccount.get().getBio());
+        model.addAttribute("website", optionalAccount.get().getWebsite());
+        model.addAttribute("email", optionalAccount.get().getEmail());
+        model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
         return "/accounts/edit";
     }
 
     @PostMapping("/accounts/edit")
     public String profileEdit(@AuthenticationPrincipal CustomUserDetail user,
                               Account requestAccount){
-        Account account = accountRepository.findByUsername(user.getUsername());
-        System.out.println(user.getUsername());
-        account.setUsername(requestAccount.getUsername());
-//        account.setProfileImage(requestAccount.getProfileImage());
-        account.setName(requestAccount.getName());
-        account.setWebsite(requestAccount.getWebsite());
-        account.setBio(requestAccount.getBio());
-        account.setEmail(requestAccount.getEmail());
-        account.setPhoneNumber(requestAccount.getPhoneNumber());
-        account.setProfileImage(requestAccount.getProfileImage());
 
-        accountRepository.save(account);
-
+        customUserDetailService.updateUserInfo(user.getAccount().getId(), requestAccount);
         return logOut();
     }
 
@@ -108,19 +87,20 @@ public class AccountController {
     public String profile(@PathVariable String username,
                           Model model) {
 
+        Optional<Account> optionalAccount = customUserDetailService.findByUsername(username);
+
+        System.out.println(username);
         if(username == null){
             return "/error";
         }
         else{
 
-            Account account = accountRepository.findByUsername(username);
-
-            model.addAttribute("username", account.getUsername());
-            model.addAttribute("name", account.getName());
-            model.addAttribute("bio", account.getBio());
-            model.addAttribute("website", account.getWebsite());
-            model.addAttribute("email", account.getEmail());
-            model.addAttribute("phoneNumber", account.getPhoneNumber());
+            model.addAttribute("username", optionalAccount.get().getUsername());
+            model.addAttribute("name", optionalAccount.get().getName());
+            model.addAttribute("bio", optionalAccount.get().getBio());
+            model.addAttribute("website", optionalAccount.get().getWebsite());
+            model.addAttribute("email", optionalAccount.get().getEmail());
+            model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
         }
 
         return "/accounts/profile";
