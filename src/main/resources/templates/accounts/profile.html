@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<img src="${profileImage}">
+<!--<img src="${account.profileImage}">-->
 <br/>
 
 <form th:action="@{/image/profileUpload}" method="post" enctype="multipart/form-data">
@@ -21,21 +21,21 @@
 <h1>profile</h1>
 <hr/>
 <h2>
-<a th:text="${username}"></a><br/>
+<a th:text="${account.username}"></a><br/>
 </h2>
 
 <h3>
-    <a th:text="${name}"></a><br/>
+    <a th:text="${account.name}"></a><br/>
 
 
 </h3>
 <h4>
-    <a th:text="${bio}"></a><br/>
-    <a th:href="${website}" th:text="${website}"></a><br/>
+    <a th:text="${account.bio}"></a><br/>
+    <a th:href="${account.website}" th:text="${account.website}"></a><br/>
 </h4>
 <h5>
-    <a th:text="${email}"></a><br/>
-    <a th:text="${phoneNumber}"></a><br/>
+    <a th:text="${account.email}"></a><br/>
+    <a th:text="${account.phoneNumber}"></a><br/>
 </h5>
 </body>
 </html>

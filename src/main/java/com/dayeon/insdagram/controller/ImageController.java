@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -87,32 +88,76 @@ public class ImageController {
     ) throws IOException {
 
 
-        // 파일 처리
+//        // 파일 처리
+//        UUID uuid = UUID.randomUUID();
+//        String uuidFilename = uuid + "_" + file.getOriginalFilename();
+//        Path filePath = Paths.get(fileRealPath + uuidFilename);
+//        Files.write(filePath, file.getBytes());
+//
+//        Account principal = userDetail.getAccount();
+//
+////        // 영속화
+////        Optional<Account> optionalAccount = accountRepository.findById(principal.getId());
+////        Account account = optionalAccount.get();
+//
+//        Image image = new Image();
+//
+//        image.setFile(file.getBytes());
+//        image.setAccount(principal);
+//
+//        imageRepository.save(image);
+//
+//
+//        // 값 변경
+//        principal.setProfileImage(uuidFilename);
+//
+//        // 다시 영속화 및 저장
+//        accountRepository.save(principal);
+//        System.out.println("redirect:/user/" + principal.getUsername());
+//        return "redirect:/user/" + principal.getUsername();
+
+//        UUID uuid = UUID.randomUUID();
+//        String uuidFilename = uuid + "_" + file.getOriginalFilename();
+//
+//        Account principal = userDetail.getAccount();
+//
+//        try{
+//
+//            file.transferTo(new File(fileRealPath + uuidFilename));
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        Image image = new Image();
+//
+//        image.setFile(file.getBytes());
+//        image.setAccount(principal);
+//
+//        imageRepository.save(image);
+//
+//        principal.setProfileImage(uuidFilename);
+//        accountRepository.save(principal);
+//
+//        return "redirect:/user/" + principal.getUsername();
+
+        String sourceFileName = file.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
-        String uuidFilename = uuid + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(fileRealPath + uuidFilename);
-        Files.write(filePath, file.getBytes());
+        String uuidFilename = uuid + "_" + sourceFileName;
+        File destinationFile;
 
-        Account principal = userDetail.getAccount();
+        System.out.println("dada");
 
-//        // 영속화
-//        Optional<Account> optionalAccount = accountRepository.findById(principal.getId());
-//        Account account = optionalAccount.get();
+        destinationFile = new File(fileRealPath + uuidFilename);
+        destinationFile.getParentFile().mkdirs();
+        file.transferTo(destinationFile);
 
-        Image image = new Image();
-
-        image.setFile(file.getBytes());
-        image.setAccount(principal);
-
-        imageRepository.save(image);
+        System.out.println("dadada");
 
 
-        // 값 변경
-        principal.setProfileImage(uuidFilename);
 
-        // 다시 영속화 및 저장
-        accountRepository.save(principal);
-        System.out.println("redirect:/user/" + principal.getUsername());
-        return "redirect:/user/" + principal.getUsername();
+        return null;
+
+
     }
 }

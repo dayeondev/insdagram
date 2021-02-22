@@ -95,12 +95,13 @@ public class AccountController {
         }
         else{
 
-            model.addAttribute("username", optionalAccount.get().getUsername());
-            model.addAttribute("name", optionalAccount.get().getName());
-            model.addAttribute("bio", optionalAccount.get().getBio());
-            model.addAttribute("website", optionalAccount.get().getWebsite());
-            model.addAttribute("email", optionalAccount.get().getEmail());
-            model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
+//            model.addAttribute("username", optionalAccount.get().getUsername());
+//            model.addAttribute("name", optionalAccount.get().getName());
+//            model.addAttribute("bio", optionalAccount.get().getBio());
+//            model.addAttribute("website", optionalAccount.get().getWebsite());
+//            model.addAttribute("email", optionalAccount.get().getEmail());
+//            model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
+            model.addAttribute("account", optionalAccount.get());
         }
 
         return "/accounts/profile";
