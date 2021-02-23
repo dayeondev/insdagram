@@ -13,9 +13,10 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Lob
-    @Column(length=1024000)
-    private byte[] file;
+//    @Lob
+//    @Column(length=1024000)
+//    private byte[] file;
+    private String directory;
     private String location;
     private String caption;
 

@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<!--<img src="${account.profileImage}">-->
+<img th:src="${fileRealPath}">
 <br/>
 
 <form th:action="@{/image/profileUpload}" method="post" enctype="multipart/form-data">

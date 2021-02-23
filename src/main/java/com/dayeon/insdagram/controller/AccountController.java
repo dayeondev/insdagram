@@ -5,6 +5,7 @@ import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.service.CustomUserDetail;
 import com.dayeon.insdagram.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,9 @@ import java.util.Optional;
 
 @Controller
 public class AccountController {
+
+    @Value("${file.path}")
+    private String fileRealPath;
 
     @Autowired
     private CustomUserDetailService customUserDetailService;
@@ -102,6 +106,8 @@ public class AccountController {
 //            model.addAttribute("email", optionalAccount.get().getEmail());
 //            model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
             model.addAttribute("account", optionalAccount.get());
+            model.addAttribute("fileRealPath", fileRealPath + optionalAccount.get().getProfileImage());
+
         }
 
         return "/accounts/profile";

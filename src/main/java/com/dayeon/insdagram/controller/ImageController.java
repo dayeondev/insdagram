@@ -6,6 +6,7 @@ import com.dayeon.insdagram.domain.Image;
 import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.repository.ImageRepository;
 import com.dayeon.insdagram.service.CustomUserDetail;
+import com.dayeon.insdagram.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -38,8 +39,9 @@ public class ImageController {
     @Autowired
     ImageRepository imageRepository;
 
+
     @Autowired
-    private AccountRepository accountRepository;
+    private CustomUserDetailService customUserDetailService;
 
 
     @GetMapping("/image/upload")
@@ -54,22 +56,22 @@ public class ImageController {
             @RequestParam("file")MultipartFile file
     ) throws IOException{
 
-        UUID uuid = UUID.randomUUID();
-        String uuidFilename = uuid + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(fileRealPath + uuidFilename);
-        Files.write(filePath, file.getBytes());
-
-        Account principal = userDetail.getAccount();
-        System.out.println(principal.getWebsite());
-
-
-
-        Image image = new Image();
-
-        image.setFile(file.getBytes());
-        image.setAccount(principal);
-
-        imageRepository.save(image);
+//        UUID uuid = UUID.randomUUID();
+//        String uuidFilename = uuid + "_" + file.getOriginalFilename();
+//        Path filePath = Paths.get(fileRealPath + uuidFilename);
+//        Files.write(filePath, file.getBytes());
+//
+//        Account principal = userDetail.getAccount();
+//        System.out.println(principal.getWebsite());
+//
+//
+//
+//        Image image = new Image();
+//
+//        image.setFile(file.getBytes());
+//        image.setAccount(principal);
+//
+//        imageRepository.save(image);
 
 
 //        return ResponseEntity.ok()
@@ -139,24 +141,29 @@ public class ImageController {
 //        principal.setProfileImage(uuidFilename);
 //        accountRepository.save(principal);
 //
-//        return "redirect:/user/" + principal.getUsername();
 
+
+//        https://private.tistory.com/59
+        Account principal = userDetail.getAccount();
         String sourceFileName = file.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
         String uuidFilename = uuid + "_" + sourceFileName;
         File destinationFile;
 
-        System.out.println("dada");
+        Image image = new Image();
+        image.setDirectory(uuidFilename);
+        image.setAccount(principal);
 
         destinationFile = new File(fileRealPath + uuidFilename);
         destinationFile.getParentFile().mkdirs();
         file.transferTo(destinationFile);
 
-        System.out.println("dadada");
+        principal.setProfileImage(uuidFilename);
 
+        customUserDetailService.updateUserInfo(principal.getId(), principal);
+        imageRepository.save(image);
 
-
-        return null;
+        return "redirect:/user/" + principal.getUsername();
 
 
     }
