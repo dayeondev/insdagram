@@ -71,7 +71,6 @@ public class CustomUserDetailService implements UserDetailsService {
         }
         catch (NoSuchElementException e){
             requestAccount.setPassword(passwordEncoder.encode(requestAccount.getPassword()));
-            System.out.println("here");
             accountRepository.save(requestAccount);
         }
 
