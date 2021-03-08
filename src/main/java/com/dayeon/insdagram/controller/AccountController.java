@@ -2,6 +2,7 @@ package com.dayeon.insdagram.controller;
 
 import com.dayeon.insdagram.domain.Account;
 import com.dayeon.insdagram.repository.AccountRepository;
+import com.dayeon.insdagram.repository.ImageRepository;
 import com.dayeon.insdagram.service.CustomUserDetail;
 import com.dayeon.insdagram.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class AccountController {
 //    @Autowired
 //    private AccountRepository accountRepository;
 
+    @Autowired
+    private ImageRepository imageRepository;
 
 
     @GetMapping("/")
@@ -106,7 +109,8 @@ public class AccountController {
 //            model.addAttribute("email", optionalAccount.get().getEmail());
 //            model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
             model.addAttribute("account", optionalAccount.get());
-            model.addAttribute("fileRealPath", fileRealPath + optionalAccount.get().getProfileImage());
+            String imageDirectory = imageRepository.findById(optionalAccount.get().getProfileImage()).get().getDirectory();
+            model.addAttribute("fileRealPath", fileRealPath + imageDirectory);
 
         }
 

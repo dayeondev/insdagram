@@ -11,7 +11,7 @@ import java.security.Timestamp;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
 //    @Lob
 //    @Column(length=1024000)

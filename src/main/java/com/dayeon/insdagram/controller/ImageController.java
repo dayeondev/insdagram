@@ -142,26 +142,33 @@ public class ImageController {
 //        accountRepository.save(principal);
 //
 
-
+//        <파일 업로드 관련 자료>
 //        https://private.tistory.com/59
+        
+//        계정 DTO 가져오기
         Account principal = userDetail.getAccount();
+
+//        파일 이름 설정하기
         String sourceFileName = file.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
         String uuidFilename = uuid + "_" + sourceFileName;
-        File destinationFile;
 
+//        이미지 DTO 생성 / 영속화
         Image image = new Image();
         image.setDirectory(uuidFilename);
         image.setAccount(principal);
+        imageRepository.save(image);
 
+//        로컬에 파일 저장
+        File destinationFile;
         destinationFile = new File(fileRealPath + uuidFilename);
         destinationFile.getParentFile().mkdirs();
         file.transferTo(destinationFile);
 
-        principal.setProfileImage(uuidFilename);
-
+//        계정 DTO에 이미지id 저장
+        principal.setProfileImage(imageRepository.findByDirectory(uuidFilename).get().getId());
+//        계정 DTO 영속화
         customUserDetailService.updateUserInfo(principal.getId(), principal);
-        imageRepository.save(image);
 
         return "redirect:/user/" + principal.getUsername();
 

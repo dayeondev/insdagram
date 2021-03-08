@@ -17,8 +17,9 @@ public class Account  {
     private String username;
     private String password;
 
-
-    private String profileImage;
+//    @ManyToOne
+//    @JoinColumn(name = "profile_image")
+    private Long profileImage;
 
     private String name;
     private String website;

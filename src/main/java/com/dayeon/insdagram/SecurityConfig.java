@@ -1,6 +1,7 @@
 package com.dayeon.insdagram;
 
 import com.dayeon.insdagram.repository.AccountRepository;
+import com.dayeon.insdagram.repository.ImageRepository;
 import com.dayeon.insdagram.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
