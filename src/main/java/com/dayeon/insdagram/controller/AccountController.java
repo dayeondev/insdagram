@@ -5,8 +5,11 @@ import com.dayeon.insdagram.repository.AccountRepository;
 import com.dayeon.insdagram.repository.ImageRepository;
 import com.dayeon.insdagram.service.CustomUserDetail;
 import com.dayeon.insdagram.service.CustomUserDetailService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 
 @Controller
@@ -92,7 +99,11 @@ public class AccountController {
 
     @GetMapping("/user/{username}")
     public String profile(@PathVariable String username,
+                          HttpSession session,
                           Model model) {
+        String path = session.getServletContext().getRealPath("/") + "WEB-INF/uploadFiles/";
+//        System.out.println("dadada");
+//        System.out.println(path);
 
         Optional<Account> optionalAccount = customUserDetailService.findByUsername(username);
 
@@ -110,10 +121,15 @@ public class AccountController {
 //            model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
             model.addAttribute("account", optionalAccount.get());
             String imageDirectory = imageRepository.findById(optionalAccount.get().getProfileImage()).get().getDirectory();
-            model.addAttribute("fileRealPath", fileRealPath + imageDirectory);
+//            model.addAttribute("fileRealPath", fileRealPath + imageDirectory);
+            model.addAttribute("fileRealPath", path + imageDirectory);
 
         }
 
+
         return "/accounts/profile";
     }
+
+
+
 }
