@@ -99,9 +99,7 @@ public class AccountController {
 
     @GetMapping("/user/{username}")
     public String profile(@PathVariable String username,
-                          HttpSession session,
                           Model model) {
-        String path = session.getServletContext().getRealPath("/") + "WEB-INF/uploadFiles/";
 //        System.out.println("dadada");
 //        System.out.println(path);
 
@@ -121,8 +119,7 @@ public class AccountController {
 //            model.addAttribute("phoneNumber", optionalAccount.get().getPhoneNumber());
             model.addAttribute("account", optionalAccount.get());
             String imageDirectory = imageRepository.findById(optionalAccount.get().getProfileImage()).get().getDirectory();
-//            model.addAttribute("fileRealPath", fileRealPath + imageDirectory);
-            model.addAttribute("fileRealPath", path + imageDirectory);
+            model.addAttribute("fileRealPath", "file:///"+ fileRealPath + imageDirectory);
 
         }
 
