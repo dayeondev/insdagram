@@ -1,2 +1,4 @@
-package com.dayeon.insdagram.service;public class ImageService {
+package com.dayeon.insdagram.service;
+
+public class ImageService {
 }
